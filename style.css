@@ -10,60 +10,109 @@ body {
   padding: 20px;
 }
 
-/* Container styling for the main content */
+/* Main container with left and right sections */
 .container {
-  background: #1e1e1e;
-  padding: 20px;
-  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  max-width: 500px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Style for input elements */
-input[type="text"], select, textarea {
-  width: 100%;
+/* Left section: input, dropdown, weapon list */
+.left-section {
+  flex: 1;
+  margin-right: 20px;
+}
+
+/* Right section: Weapon Progress tracker */
+.right-section {
+  width: 250px;
+  background: #2c2c2c;
+  padding: 15px;
+  border-radius: 10px;
+  color: #eee;
+}
+
+.right-section h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+#progressStatus {
+  font-size: 16px;
+}
+
+#progressStatus p {
+  margin: 10px 0;
+}
+
+/* Input and form styles */
+input[type="text"],
+select,
+textarea {
+  width: 70%;
   padding: 10px;
   margin-bottom: 10px;
+  background-color: #1c1c1c;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 5px;
 }
 
-/* Button styling */
+select {
+  width: 75%;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
 button {
-  padding: 10px;
+  padding: 10px 15px;
   background-color: #29b6f6;
   border: none;
   color: white;
   cursor: pointer;
-  width: 100%;
+  margin: 5px 3px 5px 0;
+  border-radius: 5px;
 }
 
-/* List styling */
+button:hover {
+  background-color: #1e88e5;
+}
+
+/* List styles */
 ul {
   list-style-type: none;
   padding-left: 0;
 }
 
-/* Style for each weapon item in the list */
 li {
   background-color: #2c2c2c;
   padding: 10px;
   margin-top: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-radius: 5px;
+  line-height: 1.4em;
 }
 
-/* Strikethrough effect for completed weapons */
 li.completed {
   text-decoration: line-through;
   color: #888;
 }
 
-/* Styling for buttons within the list */
-button {
-  background-color: #f44336;
-  padding: 5px;
+/* Inside each list item */
+li button {
+  padding: 5px 10px;
+  background-color: #444;
   border: none;
   color: white;
   cursor: pointer;
-  margin-left: 5px;
+  margin-left: 10px;
+  border-radius: 4px;
+}
+
+li button:hover {
+  background-color: #666;
 }
