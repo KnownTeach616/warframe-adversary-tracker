@@ -34,7 +34,7 @@ function loadWeapons() {
   updateProgress(stored);
 }
 
-// Add weapon entry
+// Add new weapon entry
 function addWeapon() {
   const name = weaponSelect.value;
   const element = elementSelect.value;
@@ -46,6 +46,13 @@ function addWeapon() {
 
   const newWeapon = { name, element, vice, bonus, remarks };
   const stored = JSON.parse(localStorage.getItem("weapons")) || [];
+
+  // Avoid duplicate weapons
+  if (stored.find(w => w.name === name)) {
+    alert("Weapon already added!");
+    return;
+  }
+
   stored.push(newWeapon);
   localStorage.setItem("weapons", JSON.stringify(stored));
 
@@ -60,7 +67,7 @@ function addWeapon() {
   remarksInput.value = "";
 }
 
-// Determine category for the weapon
+// Get the appropriate table body for a weapon
 function getCategoryTable(name) {
   if (kuvaWeapons.includes(name)) return document.querySelector("#kuvaTable tbody");
   if (tenetWeapons.includes(name)) return document.querySelector("#tenetTable tbody");
@@ -68,14 +75,13 @@ function getCategoryTable(name) {
   return null;
 }
 
-// Render weapon row in the right category
+// Add a weapon row to the UI
 function addWeaponToTable(weapon) {
   const tableBody = getCategoryTable(weapon.name);
   if (!tableBody) return;
 
   const row = document.createElement("tr");
 
-  // Create editable fields
   row.innerHTML = `
     <td contenteditable="true">${weapon.name}</td>
     <td contenteditable="true">${weapon.element}</td>
@@ -87,20 +93,22 @@ function addWeaponToTable(weapon) {
 
   const deleteBtn = row.querySelector(".delete-btn");
   deleteBtn.addEventListener("click", () => {
-    row.remove();
-    removeWeapon(weapon.name);
+    if (confirm(`Are you sure you want to delete ${weapon.name}?`)) {
+      row.remove();
+      removeWeapon(weapon.name);
+    }
   });
 
-  // On any field change, update storage
   const inputs = row.querySelectorAll("td input, td[contenteditable]");
   inputs.forEach(input => {
     input.addEventListener("input", () => updateFromTables());
   });
 
   tableBody.appendChild(row);
+  sortTable(tableBody);
 }
 
-// Remove weapon by name
+// Remove a weapon by name
 function removeWeapon(name) {
   const stored = JSON.parse(localStorage.getItem("weapons")) || [];
   const updated = stored.filter(w => w.name !== name);
@@ -108,7 +116,7 @@ function removeWeapon(name) {
   updateProgress(updated);
 }
 
-// Reconstruct data from tables and save
+// Read all rows and update localStorage
 function updateFromTables() {
   const allRows = document.querySelectorAll("table tbody tr");
   const data = Array.from(allRows).map(row => {
@@ -125,7 +133,7 @@ function updateFromTables() {
   updateProgress(data);
 }
 
-// Update progress stats
+// Update the right-side progress panel
 function updateProgress(data) {
   const collected = data.length;
   const maxed = data.filter(w => w.bonus === 60).length;
@@ -137,6 +145,19 @@ function updateProgress(data) {
     <p>Max Percent: ${maxed}/20</p>
     <p>Installed Vice: ${withVice}/20</p>
   `;
+}
+
+// Sort a given table body alphabetically by weapon name
+function sortTable(tableBody) {
+  const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+  rows.sort((a, b) => {
+    const nameA = a.cells[0].innerText.toLowerCase();
+    const nameB = b.cells[0].innerText.toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  rows.forEach(row => tableBody.appendChild(row));
 }
 
 document.addEventListener("DOMContentLoaded", loadWeapons);
