@@ -1,4 +1,4 @@
-/* General Styles */
+/* General Layout */
 body {
   font-family: Arial, sans-serif;
   background-color: #121212;
@@ -14,16 +14,15 @@ body {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
 }
 
-/* Left Section */
+/* Left and Right Sections */
 .left-section {
   flex: 1;
   margin-right: 20px;
 }
 
-/* Right Section */
 .right-section {
   width: 250px;
   background: #2c2c2c;
@@ -41,27 +40,65 @@ body {
   font-size: 16px;
 }
 
-/* Category-specific sections */
-.category-section {
-  margin-top: 30px;
+/* Weapon Form */
+.weapon-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-.category-section h2 {
-  margin-bottom: 15px;
-  font-size: 18px;
-  text-align: center;
-  color: #29b6f6;
-}
-
-/* Weapon Form Controls */
-input[type="text"],
-select {
+.weapon-form select,
+.weapon-form input[type="text"],
+.weapon-form input[type="number"] {
   padding: 6px;
-  margin: 0 4px 4px 0;
   background-color: #1c1c1c;
   color: #fff;
   border: 1px solid #444;
   border-radius: 4px;
+}
+
+.weapon-form input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-top: 5px;
+}
+
+/* Weapon Row Layout */
+.weapon-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Table Styling */
+.category-section {
+  flex: 1;
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.category-section h2 {
+  text-align: center;
+  color: #29b6f6;
+  margin-bottom: 10px;
+}
+
+.category-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.category-section th,
+.category-section td {
+  padding: 6px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.category-section th {
+  background-color: #2a2a2a;
 }
 
 /* Buttons */
@@ -71,7 +108,6 @@ button {
   border: none;
   color: white;
   cursor: pointer;
-  margin-left: 8px;
   border-radius: 4px;
 }
 
@@ -88,7 +124,7 @@ button:hover {
   background-color: #d32f2f;
 }
 
-/* Completed Weapon Styling */
+/* Completed Styling */
 .completed {
   text-decoration: line-through;
   color: #888;
