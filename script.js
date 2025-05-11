@@ -20,7 +20,10 @@ function loadWeapons() {
 
 function addWeapon() {
   const name = weaponSelect.value;
-  if (!name) return;
+  if (!name) {
+    alert('Please select a weapon!');
+    return;
+  }
 
   const weapons = JSON.parse(localStorage.getItem('weapons')) || [];
 
