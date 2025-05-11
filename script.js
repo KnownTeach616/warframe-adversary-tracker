@@ -1,151 +1,142 @@
-// Get DOM elements for tracking progress
-const collectedCountElem = document.getElementById('collectedCount');
-const maxPercentCountElem = document.getElementById('maxPercentCount');
-const viceCountElem = document.getElementById('viceCount');
+const kuvaWeapons = [
+  "Ayanga", "Brakk", "Bramma", "Chakkurr", "Drakgoon", "Grattler", "Hek",
+  "Hind", "Karak", "Kohm", "Kraken", "Nukor", "Ogris", "Quartakk",
+  "Seer", "Shildeg", "Sobek", "Tonkor", "Twin Stubba", "Zarr"
+];
+const tenetWeapons = [
+  "Arca Plasmor", "Cycron", "Detron", "Diplos", "Envoy", "Flux Rifle", "Glaxion",
+  "Plinx", "Spirex", "Tetra", "Agendus", "Exec", "Ferrox", "Grigori", "Livia"
+];
+const codaWeapons = [
+  "Catabolyst", "Dual Torxica", "Hema", "Mire", "Motovore", "Pox", "Sporothrix",
+  "Bassocyst", "Caustacyst", "Hirudo", "Pathocyst", "Synapse", "Tysis"
+];
 
-// Load saved weapons and update progress on page load
-document.addEventListener('DOMContentLoaded', () => {
-  loadWeapons();
-  updateProgress();
-});
-
-// Load saved weapons from localStorage
-function loadWeapons() {
-  const saved = JSON.parse(localStorage.getItem('weapons')) || [];
-  saved.forEach(addWeaponToDOM);
+function populateWeaponDropdown() {
+  const weaponSelect = document.getElementById("weaponSelect");
+  const allWeapons = [...kuvaWeapons, ...tenetWeapons, ...codaWeapons];
+  allWeapons.forEach(weapon => {
+    const option = document.createElement("option");
+    option.value = weapon;
+    option.textContent = weapon;
+    weaponSelect.appendChild(option);
+  });
 }
 
-// Add a new weapon to the list and localStorage
+function loadWeapons() {
+  const saved = JSON.parse(localStorage.getItem("weapons")) || [];
+  saved.forEach(addWeaponToDOM);
+  updateProgress(saved);
+}
+
 function addWeapon() {
+  const weaponSelect = document.getElementById("weaponSelect");
   const name = weaponSelect.value;
-  if (!name) {
-    alert('Please select a weapon!');
-    return;
-  }
 
-  const weapons = JSON.parse(localStorage.getItem('weapons')) || [];
+  if (!name) return;
 
-  // Prevent adding duplicate weapons
-  if (weapons.some(w => w.name === name)) {
-    alert(`${name} is already in your list.`);
-    return;
-  }
-
-  // Get details from the form fields
-  const element = document.getElementById('elementSelect').value;
-  const vice = document.getElementById('viceCheckbox').checked;
-  const bonus = parseInt(document.getElementById('bonusSelect').value, 10);
-  const remarks = document.getElementById('remarksInput').value.trim();
+  const weapons = JSON.parse(localStorage.getItem("weapons")) || [];
+  if (weapons.some(w => w.name === name)) return;
 
   const weapon = {
     name,
     completed: false,
-    element,
-    vice,
-    bonus,
-    remarks
+    bonus: 25,
+    vice: false,
+    remarks: ""
   };
 
-  // Save to localStorage and update the list
   weapons.push(weapon);
-  localStorage.setItem('weapons', JSON.stringify(weapons));
+  localStorage.setItem("weapons", JSON.stringify(weapons));
   addWeaponToDOM(weapon);
-
-  // Update the progress display
-  updateProgress();
-
-  // Clear the form after adding
-  resetForm();
+  updateProgress(weapons);
 }
 
-// Display the weapon in the list
 function addWeaponToDOM(weapon) {
-  const li = document.createElement('li');
-  li.className = weapon.completed ? 'completed' : '';
-  li.id = weapon.name;
+  const li = document.createElement("li");
 
-  const details = `
-    <strong>${weapon.name}</strong> 
-    [${weapon.element}, ${weapon.bonus}%, Vice: ${weapon.vice ? 'Yes' : 'No'}]
-    ${weapon.remarks ? `<br><em>${weapon.remarks}</em>` : ''}
-    <button onclick="editWeapon('${weapon.name}')">Edit</button>
-    <button onclick="removeWeapon('${weapon.name}')">Delete</button>
-  `;
-  li.innerHTML = details;
-  li.addEventListener('click', () => toggleWeapon(weapon.name));
-  weaponList.appendChild(li);
-}
+  const name = document.createElement("strong");
+  name.textContent = weapon.name;
+  name.style.cursor = "pointer";
+  name.addEventListener("click", () => toggleWeapon(weapon.name));
+  if (weapon.completed) name.classList.add("completed");
 
-// Update the progress statistics
-function updateProgress() {
-  const weapons = JSON.parse(localStorage.getItem('weapons')) || [];
-  
-  // Track total weapons, those with max percent (60%), and those with vice installed
-  let collectedCount = 0;
-  let maxPercentCount = 0;
-  let viceCount = 0;
-
-  weapons.forEach(weapon => {
-    collectedCount++;
-    if (weapon.bonus === 60) maxPercentCount++;
-    if (weapon.vice) viceCount++;
-  });
-
-  // Update progress on the page
-  collectedCountElem.textContent = collectedCount;
-  maxPercentCountElem.textContent = maxPercentCount;
-  viceCountElem.textContent = viceCount;
-}
-
-// Toggle the completion status of a weapon
-function toggleWeapon(name) {
-  const weapons = JSON.parse(localStorage.getItem('weapons')) || [];
-  const updated = weapons.map(w => w.name === name ? { ...w, completed: !w.completed } : w);
-  localStorage.setItem('weapons', JSON.stringify(updated));
-  weaponList.innerHTML = '';
-  updated.forEach(addWeaponToDOM);
-
-  // Update progress after toggle
-  updateProgress();
-}
-
-// Remove a weapon from the list
-function removeWeapon(name) {
-  let weapons = JSON.parse(localStorage.getItem('weapons')) || [];
-  weapons = weapons.filter(w => w.name !== name);
-  localStorage.setItem('weapons', JSON.stringify(weapons));
-  weaponList.innerHTML = '';
-  weapons.forEach(addWeaponToDOM);
-
-  // Update progress after removal
-  updateProgress();
-}
-
-// Edit a weapon's details
-function editWeapon(name) {
-  let weapons = JSON.parse(localStorage.getItem('weapons')) || [];
-  const weapon = weapons.find(w => w.name === name);
-
-  if (weapon) {
-    // Pre-fill form fields with weapon's current details
-    document.getElementById('weaponSelect').value = weapon.name;
-    document.getElementById('elementSelect').value = weapon.element;
-    document.getElementById('viceCheckbox').checked = weapon.vice;
-    document.getElementById('bonusSelect').value = weapon.bonus;
-    document.getElementById('remarksInput').value = weapon.remarks;
-
-    // Remove the weapon before re-adding it
-    weapons = weapons.filter(w => w.name !== name);
-    localStorage.setItem('weapons', JSON.stringify(weapons));
-    weaponList.innerHTML = '';
-    weapons.forEach(addWeaponToDOM);
+  // Bonus % selector
+  const bonusInput = document.createElement("select");
+  for (let i = 25; i <= 60; i += 5) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = i + "%";
+    if (weapon.bonus === i) option.selected = true;
+    bonusInput.appendChild(option);
   }
+  bonusInput.addEventListener("change", () => updateField(weapon.name, "bonus", parseInt(bonusInput.value)));
+
+  // Vice checkbox
+  const viceInput = document.createElement("input");
+  viceInput.type = "checkbox";
+  viceInput.checked = weapon.vice;
+  viceInput.addEventListener("change", () => updateField(weapon.name, "vice", viceInput.checked));
+
+  // Remarks
+  const remarksInput = document.createElement("input");
+  remarksInput.type = "text";
+  remarksInput.placeholder = "Remarks...";
+  remarksInput.value = weapon.remarks;
+  remarksInput.addEventListener("input", () => updateField(weapon.name, "remarks", remarksInput.value));
+
+  // Delete
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.className = "delete-btn";
+  deleteBtn.addEventListener("click", () => deleteWeapon(weapon.name));
+
+  li.append(name, bonusInput, viceInput, remarksInput, deleteBtn);
+  document.getElementById("weaponList").appendChild(li);
 }
 
-// Reset form fields after adding a weapon
-function resetForm() {
-  weaponSelect.selectedIndex = 0;
-  document.getElementById('remarksInput').value = '';
-  document.getElementById('viceCheckbox').checked = false;
-  document.getElementById('bonusSelect').selectedIndex = 0;
+function toggleWeapon(name) {
+  let weapons = JSON.parse(localStorage.getItem("weapons")) || [];
+  weapons = weapons.map(w => w.name === name ? { ...w, completed: !w.completed } : w);
+  localStorage.setItem("weapons", JSON.stringify(weapons));
+  refreshList(weapons);
 }
+
+function updateField(name, field, value) {
+  let weapons = JSON.parse(localStorage.getItem("weapons")) || [];
+  weapons = weapons.map(w => w.name === name ? { ...w, [field]: value } : w);
+  localStorage.setItem("weapons", JSON.stringify(weapons));
+  updateProgress(weapons);
+}
+
+function deleteWeapon(name) {
+  let weapons = JSON.parse(localStorage.getItem("weapons")) || [];
+  weapons = weapons.filter(w => w.name !== name);
+  localStorage.setItem("weapons", JSON.stringify(weapons));
+  refreshList(weapons);
+}
+
+function refreshList(weapons) {
+  const list = document.getElementById("weaponList");
+  list.innerHTML = "";
+  weapons.forEach(addWeaponToDOM);
+  updateProgress(weapons);
+}
+
+function updateProgress(weapons) {
+  const total = 20;
+  const collected = weapons.length;
+  const maxPercent = weapons.filter(w => w.bonus === 60).length;
+  const withVice = weapons.filter(w => w.vice).length;
+
+  document.getElementById("progressStatus").innerHTML = `
+    <p>Weapons Collected: ${collected}/${total}</p>
+    <p>Max Percent: ${maxPercent}/${total}</p>
+    <p>Installed Vice: ${withVice}/${total}</p>
+  `;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  populateWeaponDropdown();
+  loadWeapons();
+});
