@@ -1,4 +1,4 @@
-const weaponInput = document.getElementById('weaponInput');
+const weaponSelect = document.getElementById('weaponSelect');
 const weaponList = document.getElementById('weaponList');
 
 function loadWeapons() {
@@ -7,16 +7,22 @@ function loadWeapons() {
 }
 
 function addWeapon() {
-  const name = weaponInput.value.trim();
-  if (name === '') return;
+  const name = weaponSelect.value;
+  if (!name) return;
+
+  const weapons = JSON.parse(localStorage.getItem('weapons')) || [];
+
+  if (weapons.some(w => w.name === name)) {
+    alert(`${name} is already in your list.`);
+    return;
+  }
 
   const weapon = { name, completed: false };
-  const weapons = JSON.parse(localStorage.getItem('weapons')) || [];
   weapons.push(weapon);
   localStorage.setItem('weapons', JSON.stringify(weapons));
   addWeaponToDOM(weapon);
 
-  weaponInput.value = '';
+  weaponSelect.selectedIndex = 0;
 }
 
 function addWeaponToDOM(weapon) {
