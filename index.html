@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Warframe Adversary Weapon Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,34 +11,23 @@
     <div class="left-section">
       <h1>Adversary Weapon Tracker</h1>
 
-      <!-- Dropdown for selecting a weapon -->
       <select id="weaponSelect">
-        <option value="" disabled selected>Select a weapon</option>
-        <!-- Options for weapons... -->
+        <option value="" disabled selected>Select Weapon</option>
       </select>
-
       <button onclick="addWeapon()">Add Weapon</button>
 
-      <!-- Section to enter extra weapon details -->
-      <div id="extraFields" style="margin-top: 15px;">
-        <!-- Additional fields... -->
-      </div>
-
-      <!-- List where weapons are displayed -->
       <ul id="weaponList"></ul>
     </div>
 
-    <!-- Progress Section -->
     <div class="right-section">
       <h2>Weapon Progress</h2>
       <div id="progressStatus">
-        <p>Weapons Collected: <span id="collectedCount">0</span>/20</p>
-        <p>Max Percent: <span id="maxPercentCount">0</span>/20</p>
-        <p>Installed Vice: <span id="viceCount">0</span>/20</p>
+        <p>Weapons Collected: 0/20</p>
+        <p>Max Percent: 0/20</p>
+        <p>Installed Vice: 0/20</p>
       </div>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
