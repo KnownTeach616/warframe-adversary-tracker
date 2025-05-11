@@ -4,14 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Warframe Adversary Weapon Tracker</title>
+  <!-- Link to external CSS for styling -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>Adversary Weapon Tracker</h1>
     
+    <!-- Dropdown for selecting a weapon -->
     <select id="weaponSelect">
       <option value="" disabled selected>Select a weapon</option>
+      
+      <!-- Kuva Weapons -->
       <optgroup label="Kuva Weapons">
         <option>Ayanga</option>
         <option>Brakk</option>
@@ -34,6 +38,8 @@
         <option>Twin Stubba</option>
         <option>Zarr</option>
       </optgroup>
+
+      <!-- Tenet Weapons -->
       <optgroup label="Tenet Weapons">
         <option>Arca Plasmor</option>
         <option>Cycron</option>
@@ -51,6 +57,8 @@
         <option>Grigori</option>
         <option>Livia</option>
       </optgroup>
+
+      <!-- Coda Weapons -->
       <optgroup label="Coda Weapons">
         <option>Catabolyst</option>
         <option>Dual Torxica</option>
@@ -68,8 +76,10 @@
       </optgroup>
     </select>
 
+    <!-- Button to add selected weapon -->
     <button onclick="addWeapon()">Add Weapon</button>
 
+    <!-- Section to enter extra weapon details -->
     <div id="extraFields" style="margin-top: 15px;">
       <label for="elementSelect">Element:</label>
       <select id="elementSelect">
@@ -84,6 +94,7 @@
 
       <br />
 
+      <!-- Checkbox to indicate whether the weapon has a Vice -->
       <label>
         <input type="checkbox" id="viceCheckbox" />
         Vice
@@ -96,12 +107,16 @@
 
       <br />
 
+      <!-- Text area for additional remarks -->
       <label for="remarksInput">Remarks:</label>
       <textarea id="remarksInput" rows="2" style="width: 100%;"></textarea>
     </div>
 
+    <!-- List where weapons are displayed -->
     <ul id="weaponList"></ul>
   </div>
+
+  <!-- Link to external JS file for functionality -->
   <script src="script.js"></script>
 </body>
 </html>
