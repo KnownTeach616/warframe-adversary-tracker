@@ -4,119 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Warframe Adversary Weapon Tracker</title>
-  <!-- Link to external CSS for styling -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Adversary Weapon Tracker</h1>
-    
-    <!-- Dropdown for selecting a weapon -->
-    <select id="weaponSelect">
-      <option value="" disabled selected>Select a weapon</option>
-      
-      <!-- Kuva Weapons -->
-      <optgroup label="Kuva Weapons">
-        <option>Ayanga</option>
-        <option>Brakk</option>
-        <option>Bramma</option>
-        <option>Chakkurr</option>
-        <option>Drakgoon</option>
-        <option>Grattler</option>
-        <option>Hek</option>
-        <option>Hind</option>
-        <option>Karak</option>
-        <option>Kohm</option>
-        <option>Kraken</option>
-        <option>Nukor</option>
-        <option>Ogris</option>
-        <option>Quartakk</option>
-        <option>Seer</option>
-        <option>Shildeg</option>
-        <option>Sobek</option>
-        <option>Tonkor</option>
-        <option>Twin Stubba</option>
-        <option>Zarr</option>
-      </optgroup>
+    <div class="left-section">
+      <h1>Adversary Weapon Tracker</h1>
 
-      <!-- Tenet Weapons -->
-      <optgroup label="Tenet Weapons">
-        <option>Arca Plasmor</option>
-        <option>Cycron</option>
-        <option>Detron</option>
-        <option>Diplos</option>
-        <option>Envoy</option>
-        <option>Flux Rifle</option>
-        <option>Glaxion</option>
-        <option>Plinx</option>
-        <option>Spirex</option>
-        <option>Tetra</option>
-        <option>Agendus</option>
-        <option>Exec</option>
-        <option>Ferrox</option>
-        <option>Grigori</option>
-        <option>Livia</option>
-      </optgroup>
-
-      <!-- Coda Weapons -->
-      <optgroup label="Coda Weapons">
-        <option>Catabolyst</option>
-        <option>Dual Torxica</option>
-        <option>Hema</option>
-        <option>Mire</option>
-        <option>Motovore</option>
-        <option>Pox</option>
-        <option>Sporothrix</option>
-        <option>Bassocyst</option>
-        <option>Caustacyst</option>
-        <option>Hirudo</option>
-        <option>Pathocyst</option>
-        <option>Synapse</option>
-        <option>Tysis</option>
-      </optgroup>
-    </select>
-
-    <!-- Button to add selected weapon -->
-    <button onclick="addWeapon()">Add Weapon</button>
-
-    <!-- Section to enter extra weapon details -->
-    <div id="extraFields" style="margin-top: 15px;">
-      <label for="elementSelect">Element:</label>
-      <select id="elementSelect">
-        <option value="Impact">Impact</option>
-        <option value="Heat">Heat</option>
-        <option value="Cold">Cold</option>
-        <option value="Electricity">Electricity</option>
-        <option value="Toxin">Toxin</option>
-        <option value="Magnetic">Magnetic</option>
-        <option value="Radiation">Radiation</option>
+      <!-- Dropdown for selecting a weapon -->
+      <select id="weaponSelect">
+        <option value="" disabled selected>Select a weapon</option>
+        <!-- Options for weapons... -->
       </select>
 
-      <br />
+      <button onclick="addWeapon()">Add Weapon</button>
 
-      <!-- Checkbox to indicate whether the weapon has a Vice -->
-      <label>
-        <input type="checkbox" id="viceCheckbox" />
-        Vice
-      </label>
+      <!-- Section to enter extra weapon details -->
+      <div id="extraFields" style="margin-top: 15px;">
+        <!-- Additional fields... -->
+      </div>
 
-      <br />
-
-      <label for="bonusSelect">Bonus %:</label>
-      <select id="bonusSelect"></select>
-
-      <br />
-
-      <!-- Text area for additional remarks -->
-      <label for="remarksInput">Remarks:</label>
-      <textarea id="remarksInput" rows="2" style="width: 100%;"></textarea>
+      <!-- List where weapons are displayed -->
+      <ul id="weaponList"></ul>
     </div>
 
-    <!-- List where weapons are displayed -->
-    <ul id="weaponList"></ul>
+    <!-- Progress Section -->
+    <div class="right-section">
+      <h2>Weapon Progress</h2>
+      <div id="progressStatus">
+        <p>Weapons Collected: <span id="collectedCount">0</span>/20</p>
+        <p>Max Percent: <span id="maxPercentCount">0</span>/20</p>
+        <p>Installed Vice: <span id="viceCount">0</span>/20</p>
+      </div>
+    </div>
   </div>
 
-  <!-- Link to external JS file for functionality -->
   <script src="script.js"></script>
 </body>
 </html>
