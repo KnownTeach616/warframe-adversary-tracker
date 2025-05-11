@@ -1,20 +1,15 @@
-// Get DOM elements for later use
-const weaponSelect = document.getElementById('weaponSelect');
-const weaponList = document.getElementById('weaponList');
+// Get DOM elements for tracking progress
+const collectedCountElem = document.getElementById('collectedCount');
+const maxPercentCountElem = document.getElementById('maxPercentCount');
+const viceCountElem = document.getElementById('viceCount');
 
-// Automatically populate the Bonus % dropdown from 25 to 60
+// Load saved weapons and update progress on page load
 document.addEventListener('DOMContentLoaded', () => {
-  const bonusSelect = document.getElementById('bonusSelect');
-  for (let i = 25; i <= 60; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.textContent = `${i}%`;
-    bonusSelect.appendChild(option);
-  }
   loadWeapons();
+  updateProgress();
 });
 
-// Load previously saved weapons from localStorage
+// Load saved weapons from localStorage
 function loadWeapons() {
   const saved = JSON.parse(localStorage.getItem('weapons')) || [];
   saved.forEach(addWeaponToDOM);
@@ -56,6 +51,9 @@ function addWeapon() {
   localStorage.setItem('weapons', JSON.stringify(weapons));
   addWeaponToDOM(weapon);
 
+  // Update the progress display
+  updateProgress();
+
   // Clear the form after adding
   resetForm();
 }
@@ -66,7 +64,6 @@ function addWeaponToDOM(weapon) {
   li.className = weapon.completed ? 'completed' : '';
   li.id = weapon.name;
 
-  // Show weapon details in list item
   const details = `
     <strong>${weapon.name}</strong> 
     [${weapon.element}, ${weapon.bonus}%, Vice: ${weapon.vice ? 'Yes' : 'No'}]
@@ -79,6 +76,27 @@ function addWeaponToDOM(weapon) {
   weaponList.appendChild(li);
 }
 
+// Update the progress statistics
+function updateProgress() {
+  const weapons = JSON.parse(localStorage.getItem('weapons')) || [];
+  
+  // Track total weapons, those with max percent (60%), and those with vice installed
+  let collectedCount = 0;
+  let maxPercentCount = 0;
+  let viceCount = 0;
+
+  weapons.forEach(weapon => {
+    collectedCount++;
+    if (weapon.bonus === 60) maxPercentCount++;
+    if (weapon.vice) viceCount++;
+  });
+
+  // Update progress on the page
+  collectedCountElem.textContent = collectedCount;
+  maxPercentCountElem.textContent = maxPercentCount;
+  viceCountElem.textContent = viceCount;
+}
+
 // Toggle the completion status of a weapon
 function toggleWeapon(name) {
   const weapons = JSON.parse(localStorage.getItem('weapons')) || [];
@@ -86,6 +104,9 @@ function toggleWeapon(name) {
   localStorage.setItem('weapons', JSON.stringify(updated));
   weaponList.innerHTML = '';
   updated.forEach(addWeaponToDOM);
+
+  // Update progress after toggle
+  updateProgress();
 }
 
 // Remove a weapon from the list
@@ -95,6 +116,9 @@ function removeWeapon(name) {
   localStorage.setItem('weapons', JSON.stringify(weapons));
   weaponList.innerHTML = '';
   weapons.forEach(addWeaponToDOM);
+
+  // Update progress after removal
+  updateProgress();
 }
 
 // Edit a weapon's details
