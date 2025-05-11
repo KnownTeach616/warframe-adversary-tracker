@@ -1,4 +1,3 @@
-/* General body styling */
 body {
   font-family: Arial, sans-serif;
   background-color: #121212;
@@ -10,28 +9,23 @@ body {
   padding: 20px;
 }
 
-/* Main container with left and right sections */
 .container {
   display: flex;
   justify-content: space-between;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
 }
 
-/* Left section: input, dropdown, weapon list */
 .left-section {
   flex: 1;
   margin-right: 20px;
 }
 
-/* Right section: Weapon Progress tracker */
 .right-section {
   width: 250px;
   background: #2c2c2c;
   padding: 15px;
   border-radius: 10px;
-  color: #eee;
 }
 
 .right-section h2 {
@@ -39,38 +33,23 @@ body {
   margin-bottom: 15px;
 }
 
-#progressStatus {
+#progressStatus p {
+  margin: 10px 0;
   font-size: 16px;
 }
 
-#progressStatus p {
-  margin: 10px 0;
-}
-
-/* Input and form styles */
 input[type="text"],
-select,
-textarea {
-  width: 70%;
-  padding: 10px;
-  margin-bottom: 10px;
+select {
+  padding: 6px;
+  margin: 0 4px 4px 0;
   background-color: #1c1c1c;
   color: #fff;
-  border: 1px solid #333;
-  border-radius: 5px;
-}
-
-select {
-  width: 75%;
-}
-
-textarea {
-  width: 100%;
-  resize: vertical;
+  border: 1px solid #444;
+  border-radius: 4px;
 }
 
 button {
-  padding: 10px 15px;
+  padding: 6px 10px;
   background-color: #29b6f6;
   border: none;
   color: white;
@@ -83,7 +62,6 @@ button:hover {
   background-color: #1e88e5;
 }
 
-/* List styles */
 ul {
   list-style-type: none;
   padding-left: 0;
@@ -94,25 +72,26 @@ li {
   padding: 10px;
   margin-top: 5px;
   border-radius: 5px;
-  line-height: 1.4em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
 }
 
-li.completed {
+.completed {
   text-decoration: line-through;
   color: #888;
 }
 
-/* Inside each list item */
-li button {
-  padding: 5px 10px;
-  background-color: #444;
+.delete-btn {
+  background-color: #e53935;
   border: none;
   color: white;
+  padding: 6px 10px;
   cursor: pointer;
-  margin-left: 10px;
   border-radius: 4px;
 }
 
-li button:hover {
-  background-color: #666;
+.delete-btn:hover {
+  background-color: #c62828;
 }
