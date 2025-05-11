@@ -69,6 +69,37 @@
     </select>
 
     <button onclick="addWeapon()">Add Weapon</button>
+
+    <div id="extraFields" style="margin-top: 15px;">
+      <label for="elementSelect">Element:</label>
+      <select id="elementSelect">
+        <option value="Impact">Impact</option>
+        <option value="Heat">Heat</option>
+        <option value="Cold">Cold</option>
+        <option value="Electricity">Electricity</option>
+        <option value="Toxin">Toxin</option>
+        <option value="Magnetic">Magnetic</option>
+        <option value="Radiation">Radiation</option>
+      </select>
+
+      <br />
+
+      <label>
+        <input type="checkbox" id="viceCheckbox" />
+        Vice
+      </label>
+
+      <br />
+
+      <label for="bonusSelect">Bonus %:</label>
+      <select id="bonusSelect"></select>
+
+      <br />
+
+      <label for="remarksInput">Remarks:</label>
+      <textarea id="remarksInput" rows="2" style="width: 100%;"></textarea>
+    </div>
+
     <ul id="weaponList"></ul>
   </div>
   <script src="script.js"></script>
