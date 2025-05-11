@@ -8,17 +8,32 @@
 </head>
 <body>
   <div class="container">
+    <!-- Left Section: Weapon Tracker -->
     <div class="left-section">
       <h1>Adversary Weapon Tracker</h1>
 
+      <!-- Dropdown to select weapon category -->
       <select id="weaponSelect">
         <option value="" disabled selected>Select Weapon</option>
       </select>
       <button onclick="addWeapon()">Add Weapon</button>
 
-      <ul id="weaponList"></ul>
+      <!-- Weapon List -->
+      <div class="category-section" id="kuvaWeapons">
+        <h2>Kuva Weapons</h2>
+        <ul id="kuvaWeaponList"></ul>
+      </div>
+      <div class="category-section" id="tenetWeapons">
+        <h2>Tenet Weapons</h2>
+        <ul id="tenetWeaponList"></ul>
+      </div>
+      <div class="category-section" id="codaWeapons">
+        <h2>Coda Weapons</h2>
+        <ul id="codaWeaponList"></ul>
+      </div>
     </div>
 
+    <!-- Right Section: Progress Tracker -->
     <div class="right-section">
       <h2>Weapon Progress</h2>
       <div id="progressStatus">
