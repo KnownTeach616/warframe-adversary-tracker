@@ -9,7 +9,65 @@
 <body>
   <div class="container">
     <h1>Adversary Weapon Tracker</h1>
-    <input type="text" id="weaponInput" placeholder="Enter weapon name..." />
+    
+    <select id="weaponSelect">
+      <option value="" disabled selected>Select a weapon</option>
+      <optgroup label="Kuva Weapons">
+        <option>Ayanga</option>
+        <option>Brakk</option>
+        <option>Bramma</option>
+        <option>Chakkurr</option>
+        <option>Drakgoon</option>
+        <option>Grattler</option>
+        <option>Hek</option>
+        <option>Hind</option>
+        <option>Karak</option>
+        <option>Kohm</option>
+        <option>Kraken</option>
+        <option>Nukor</option>
+        <option>Ogris</option>
+        <option>Quartakk</option>
+        <option>Seer</option>
+        <option>Shildeg</option>
+        <option>Sobek</option>
+        <option>Tonkor</option>
+        <option>Twin Stubba</option>
+        <option>Zarr</option>
+      </optgroup>
+      <optgroup label="Tenet Weapons">
+        <option>Arca Plasmor</option>
+        <option>Cycron</option>
+        <option>Detron</option>
+        <option>Diplos</option>
+        <option>Envoy</option>
+        <option>Flux Rifle</option>
+        <option>Glaxion</option>
+        <option>Plinx</option>
+        <option>Spirex</option>
+        <option>Tetra</option>
+        <option>Agendus</option>
+        <option>Exec</option>
+        <option>Ferrox</option>
+        <option>Grigori</option>
+        <option>Livia</option>
+      </optgroup>
+      <optgroup label="Coda Weapons">
+        <option>Catabolyst</option>
+        <option>Dual Torxica</option>
+        <option>Hema</option>
+        <option>Mire</option>
+        <option>Motovore</option>
+        <option>Pox</option>
+        <option>Sporothrix</option>
+        <option>Bassocyst</option>
+        <option>Caustacyst</option>
+        <option>Hirudo</option>
+        <option>Pathocyst</option>
+        <option>Synapse</option>
+        <option>Tysis</option>
+      </optgroup>
+    </select>
+
     <button onclick="addWeapon()">Add Weapon</button>
     <ul id="weaponList"></ul>
   </div>
