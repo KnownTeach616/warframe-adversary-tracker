@@ -2,38 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Warframe Adversary Weapon Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <!-- Left Section: Weapon Tracker -->
     <div class="left-section">
       <h1>Adversary Weapon Tracker</h1>
 
-      <!-- Dropdown to select weapon category -->
-      <select id="weaponSelect">
-        <option value="" disabled selected>Select Weapon</option>
-      </select>
-      <button onclick="addWeapon()">Add Weapon</button>
+      <!-- Add Weapon Form -->
+      <div class="weapon-form">
+        <select id="weaponSelect">
+          <option disabled selected>Select Weapon</option>
+        </select>
+        <select id="elementSelect">
+          <option disabled selected>Select Element</option>
+          <option>Impact</option>
+          <option>Heat</option>
+          <option>Cold</option>
+          <option>Electricity</option>
+          <option>Toxin</option>
+          <option>Magnetic</option>
+          <option>Radiation</option>
+        </select>
+        <input type="checkbox" id="viceCheckbox" /> Vice
+        <input type="number" id="bonusPercent" placeholder="Bonus %" min="25" max="60" />
+        <input type="text" id="remarksInput" placeholder="Remarks..." />
+        <button onclick="addWeapon()">Add Weapon</button>
+      </div>
 
-      <!-- Weapon List -->
-      <div class="category-section" id="kuvaWeapons">
-        <h2>Kuva Weapons</h2>
-        <ul id="kuvaWeaponList"></ul>
-      </div>
-      <div class="category-section" id="tenetWeapons">
-        <h2>Tenet Weapons</h2>
-        <ul id="tenetWeaponList"></ul>
-      </div>
-      <div class="category-section" id="codaWeapons">
-        <h2>Coda Weapons</h2>
-        <ul id="codaWeaponList"></ul>
+      <!-- Horizontal Weapon Category Row -->
+      <div id="weaponSections" class="weapon-row">
+        <div class="category-section">
+          <h2>Kuva Weapons</h2>
+          <table id="kuvaTable">
+            <thead>
+              <tr>
+                <th>Weapon</th><th>Element</th><th>Vice</th><th>Bonus %</th><th>Remarks</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="category-section">
+          <h2>Tenet Weapons</h2>
+          <table id="tenetTable">
+            <thead>
+              <tr>
+                <th>Weapon</th><th>Element</th><th>Vice</th><th>Bonus %</th><th>Remarks</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="category-section">
+          <h2>Coda Weapons</h2>
+          <table id="codaTable">
+            <thead>
+              <tr>
+                <th>Weapon</th><th>Element</th><th>Vice</th><th>Bonus %</th><th>Remarks</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- Right Section: Progress Tracker -->
+    <!-- Right-side progress tracking -->
     <div class="right-section">
       <h2>Weapon Progress</h2>
       <div id="progressStatus">
@@ -43,6 +82,7 @@
       </div>
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
