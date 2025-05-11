@@ -50,6 +50,7 @@ function addWeapon() {
   localStorage.setItem('weapons', JSON.stringify(weapons));
   addWeaponToDOM(weapon);
 
+  // Clear the form
   weaponSelect.selectedIndex = 0;
   document.getElementById('remarksInput').value = '';
   document.getElementById('viceCheckbox').checked = false;
@@ -59,12 +60,16 @@ function addWeapon() {
 function addWeaponToDOM(weapon) {
   const li = document.createElement('li');
   li.className = weapon.completed ? 'completed' : '';
+  li.id = weapon.name;
 
   const details = `
     <strong>${weapon.name}</strong> 
     [${weapon.element}, ${weapon.bonus}%, Vice: ${weapon.vice ? 'Yes' : 'No'}]
     ${weapon.remarks ? `<br><em>${weapon.remarks}</em>` : ''}
+    <button onclick="editWeapon('${weapon.name}')">Edit</button>
+    <button onclick="removeWeapon('${weapon.name}')">Delete</button>
   `;
+
   li.innerHTML = details;
   li.addEventListener('click', () => toggleWeapon(weapon.name));
   weaponList.appendChild(li);
@@ -76,4 +81,31 @@ function toggleWeapon(name) {
   localStorage.setItem('weapons', JSON.stringify(updated));
   weaponList.innerHTML = '';
   updated.forEach(addWeaponToDOM);
+}
+
+function removeWeapon(name) {
+  let weapons = JSON.parse(localStorage.getItem('weapons')) || [];
+  weapons = weapons.filter(w => w.name !== name);
+  localStorage.setItem('weapons', JSON.stringify(weapons));
+  weaponList.innerHTML = '';
+  weapons.forEach(addWeaponToDOM);
+}
+
+function editWeapon(name) {
+  let weapons = JSON.parse(localStorage.getItem('weapons')) || [];
+  const weapon = weapons.find(w => w.name === name);
+
+  if (weapon) {
+    document.getElementById('weaponSelect').value = weapon.name;
+    document.getElementById('elementSelect').value = weapon.element;
+    document.getElementById('viceCheckbox').checked = weapon.vice;
+    document.getElementById('bonusSelect').value = weapon.bonus;
+    document.getElementById('remarksInput').value = weapon.remarks;
+
+    // Remove the weapon before re-adding it
+    weapons = weapons.filter(w => w.name !== name);
+    localStorage.setItem('weapons', JSON.stringify(weapons));
+    weaponList.innerHTML = '';
+    weapons.forEach(addWeaponToDOM);
+  }
 }
